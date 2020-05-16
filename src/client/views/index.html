@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Travel App</title>
+  </head>
+   <body>
+      <div class="grid-container">
+        <div class="header">
+          <div class="capstone-title">
+            <h1>ABC Travels</h1>
+          </div>
+        </div>
+        <div class="info">
+          <div class="date-holder">
+            <label for="sdate">Trip Start Date</label>
+            <input type="text" id="sdate" placeholder="please follow MM/DD/YYYY format">
+            <label for="edate">Trip End Date</label>
+            <input type="text" id="edate" placeholder="please follow MM/DD/YYYY format">
+          </div>
+          <div class="city-holder">
+            <label for="city">Destination City</label>
+            <input type="text" id="city" placeholder="enter the city you are travelling to">
+          </div>
+          <div class="generate-holder">
+            <button id="generate" type = "submit"> Generate </button>
+          </div>
+          <div id="error-message">
+
+          </div>
+        </div>
+
+        <div class="main">
+          <img id='city-img'>
+          <div id = "lat">
+            <span></span>
+          </div> 
+          <div id = "long">
+            <span></span>
+          </div>
+          <div id = "country">
+            <span></span>
+          </div>
+          <div id = "temp">
+            <span></span>
+          </div>
+          <div id = "message">
+            <span></span>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="social">
+            <div>
+              email us <a href="mailto:abctravels@abc.com">abctravels@abc.com</a>
+            </div>
+            <div>
+                Like us on facebook
+                <a href="https://www.facebook.com/sharer.php?..." target="blank" rel="noopener noreferrer">
+                  <img id ="fb-logo" alt="Share Page on Facebook"/>
+                </a>
+            </div>
+            <div>
+                Follow us on twitter
+                <a href="https://twitter.com/intent/tweet?..." target="blank" rel="noopener noreferrer">
+                  <img id ="twitter-logo" alt="Share Page on Twitter"/></a>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
