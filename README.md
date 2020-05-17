@@ -1,10 +1,12 @@
-# Weather-Journal App Project
+# Udacity Capstone Project (Travel App)
 
 ## Overview
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+This project displays travel information of a particular city.
+Travel information includes - lat, long, country the city belongs, weather info and image of city.
 
-## Instructions
-This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
-
-## Extras
-If you are interested in testing your code as you go, you can use `tests.js` as a template for writing and running some basic tests for your code.
+## Development highlights
+1. Added user entry fields for start date, end date, city.
+2. Integrated calls to geonames api, weather-bit api, pixabay api to get lat,lon,country,temperature,city image respectively.
+3. Added tests using jest.
+4. Integrated webpack.
+5. Added styling.
