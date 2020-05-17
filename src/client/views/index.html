@@ -23,13 +23,11 @@
             <input type="text" id="city" placeholder="enter the city you are travelling to">
           </div>
           <div class="generate-holder">
-            <button id="generate" type = "submit"> Generate </button>
+            <button id="generate" type = "submit" onclick="return Client.generate(event);"> Generate </button>
           </div>
           <div id="error-message">
-
           </div>
         </div>
-
         <div class="main">
           <img id='city-img'>
           <div id = "lat">
@@ -67,5 +65,14 @@
           </div>
         </div>
       </div>
+      <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
   </body>
 </html>

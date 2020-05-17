@@ -1,44 +1,58 @@
 /*  Basic Styling To Override Default For Basic HTML Elements */
-.header { grid-area: header; }
-.info{ grid-area: info; }
-.main { grid-area: main; }
-.footer { grid-area: footer; }
+.header {
+    grid-area: header;
+}
+
+.info {
+    grid-area: info;
+}
+
+.main {
+    grid-area: main;
+}
+
+.footer {
+    grid-area: footer;
+}
 
 .grid-container {
-  display: grid;
-  grid-template-rows: 100px 2fr 4fr 80px;
-  grid-template-columns: 300px 300px 300px;
-  grid-template-areas:
-    'header header header header header header'
-    'info info info info info info'
-    'main main main main main main'
-    'footer footer footer footer footer footer';
-  grid-gap: 10px;
-  background-color: #29F;
-  padding: 10px;
+    display: grid;
+    grid-template-rows: 100px 2fr 4fr 80px;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-areas:
+        'header header header header header header'
+        'info info info info info info'
+        'main main main main main main'
+        'footer footer footer footer footer footer';
+    grid-gap: 10px;
+    background-color: #29f;
+    padding: 10px;
 }
 
 .grid-container > div {
-  background-color: #DEF;
-  text-align: center;
-  padding: 5px;
-  font-size: 30px;
-  border-radius: 12px;
+    background-color: #def;
+    text-align: center;
+    padding: 5px;
+    font-size: 30px;
+    border-radius: 12px;
 }
+
 #error-message {
-    color: red;
+    color: #f00;
 }
-label{
+
+label {
     display:block;
     font-size: 27px;
 }
+
 span {
     font-weight: bold;
     font-style: italic;
     color: #666;
 }
 
-input{
+input {
     height: 60px;
     width: 320px;
     background:#22b2da;
@@ -49,7 +63,7 @@ input{
     border: 2px solid #609;
 }
 
-button{
+button {
     width: 120px;
     height: 65px;
     background: #3b4a6b;
@@ -62,12 +76,13 @@ button{
     cursor: pointer;
     border-radius: 25px;
 }
-.social{ 
+
+.social { 
     display: flex;
     justify-content: space-around;
 }
 
-h1{
+h1 {
     font-size: 36px;
 }
 /* Reset style for HTML element on active to have no border*/

@@ -1,8 +1,9 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = [];
+const projectData = [];
 
 // Require Express to run server and routes
 const express = require('express');
+const request = require('request');
 // Start up an instance of app
 const app = express();
 /* Middleware*/
@@ -39,8 +40,8 @@ app.options('/saveTrip', cors());
 // handles post calls from client, stores the information from client to server
 app.post('/saveTrip', cors(), saveTripInfo);
 function saveTripInfo(request, response) {
-    console.log(request);
-    tripInfo = {
+    console.log(request.body);
+    const tripInfo = {
         latitude: request.body.latitude,
         longitude: request.body.longitude,
         country: request.body.country,
@@ -54,3 +55,53 @@ function saveTripInfo(request, response) {
     response.send(projectData);
     console.log(projectData);
 }
+
+/* Global Variables */
+const userName = 'tps13';
+const geoNamesBaseUrl = 'http://api.geonames.org/searchJSON';
+const weatherApiBaseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily';
+const weatherApiKey = '665d55ac5df34436b40379a087de02fc';
+const pixabayApiUrl = 'https://pixabay.com/api/';
+const pixabayApikey = '16478324-607adeaba56f44e8f704b7345';
+
+app.get('/call-geonames', async function (clientReq, clientRes) {
+  const url = `${geoNamesBaseUrl}?q=${clientReq.query.city}&username=${userName}`;
+  console.log(clientReq.query);
+  request(url, { json: true }, (err, res, body) => {
+    if (err) {
+      clientRes.send(err);
+      console.log(err);
+      return;
+    }
+    clientRes.send(body);
+  });
+});
+
+app.get('/call-weatherbit', async function (clientReq, clientRes) {
+  const url = `${weatherApiBaseUrl}?city=${clientReq.query.city}&key=${weatherApiKey}`;
+  console.log(clientReq.query);
+  request(url, { json: true }, (err, res, body) => {
+    if (err) {
+      clientRes.send(err);
+      console.log(err);
+      return;
+    }
+    clientRes.send(body);
+  });
+});
+
+app.get('/call-pixabay', async function (clientReq, clientRes) {
+  const url = `${pixabayApiUrl}?key=${pixabayApikey}&q=${clientReq.query.city}&image_type=photo&category=places&safesearch=true&per_page=3`;
+  console.log(clientReq.query);
+  request(url, { json: true }, (err, res, body) => {
+    if (err) {
+      clientRes.send(err);
+      console.log(err);
+      return;
+    }
+    clientRes.send(body);
+  });
+});
+
+exports.app = app;
+// export {app};

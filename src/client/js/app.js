@@ -1,15 +1,7 @@
 /* Global Variables */
-const userName = 'tps13';
-const geoNamesBaseUrl = 'http://api.geonames.org/searchJSON?q=';
-const localServer = 'http://localhost:3000'
-const weatherApiBBasseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?';
-const weatherApiKey = '665d55ac5df34436b40379a087de02fc';
-const pixabayApiUrl = 'https://pixabay.com/api/?';
-const pixabayApikey = '16478324-607adeaba56f44e8f704b7345';
-
-document.getElementById('generate').addEventListener('click', generate);
-
+const localServer = 'http://localhost:3000';
 async function generate(e) {
+    // e.preventDefault();
     const startDateString = document.getElementById('sdate').value;
     const endDateString = document.getElementById('edate').value;
     document.getElementById("error-message").innerText = '';
@@ -45,7 +37,6 @@ async function generate(e) {
         callGeoNamesApiInfo(city),
         callWeatherApiInfo(city),
         callPixabayApiInfo(city)
-
     ]);
     let index = 0;
     if(weatherData.data){
@@ -68,13 +59,13 @@ async function generate(e) {
         cityImage: pixabayData.hits[0].webformatURL
     });
     console.log('Both promises completed');
-    return displayTripInfo(`${localServer}/getTrip`);
+    return fetchAndDisplayTripInfo(`${localServer}/getTrip`);
 }
 
 function getDateDifference(fDate, tDate) {
-    dateTimeDifference = tDate.getTime() - fDate.getTime();
-    duration = dateTimeDifference / (1000 * 3600 * 24);
-    durationRounded = Math.round(duration)
+    const dateTimeDifference = tDate.getTime() - fDate.getTime();
+    const duration = dateTimeDifference / (1000 * 3600 * 24);
+    const durationRounded = Math.round(duration)
     return durationRounded;
 }
 
@@ -83,8 +74,8 @@ function isValidDate(dateString) {
     return !isNaN(timestamp);
 }
 
-const callGeoNamesApiInfo = async(city) =>{
-    const url = `${geoNamesBaseUrl}${city}&username=${userName}`;
+async function callGeoNamesApiInfo(city) {
+    const url = `${localServer}/call-geonames?city=${city}`;
     const response = await fetch(url);
     try {
         const geoData = await response.json();
@@ -96,8 +87,8 @@ const callGeoNamesApiInfo = async(city) =>{
     return Promise.resolve();
 }
 
-const callWeatherApiInfo = async(city) =>{
-    const url = `${weatherApiBBasseUrl}city=${city}&key=${weatherApiKey}`;
+async function callWeatherApiInfo(city) {
+    const url = `${localServer}/call-weatherbit?city=${city}`;
     const response = await fetch(url);
     try {
         const weatherData = await response.json();
@@ -109,8 +100,8 @@ const callWeatherApiInfo = async(city) =>{
     return Promise.resolve();
 }
 
-const callPixabayApiInfo = async(city) =>{
-    const url = `${pixabayApiUrl}key=${pixabayApikey}&q=${city}&image_type=photo&category=places&safesearch=true&per_page=3`;
+async function callPixabayApiInfo(city) {
+    const url = `${localServer}/call-pixabay?city=${city}`;
     const response = await fetch(url);
     try {
         const pixabayData = await response.json();
@@ -122,7 +113,7 @@ const callPixabayApiInfo = async(city) =>{
     return Promise.resolve();
 }
 
-const processTripInfo = async (url, tripData) =>{ 
+async function processTripInfo(url, tripData) {
     console.log('input to sendWeatherinfo', tripData);
     const response = await fetch(url, {
       method: 'POST', // *GETR, POST, PUT, DELETE, etc..
@@ -133,8 +124,6 @@ const processTripInfo = async (url, tripData) =>{
       body: JSON.stringify(tripData),   // body data type must match 'Content-Type'
     });
     try {
-        // .json() reads server response to completion
-        // See https://developer.mozilla.org/en-US/docs/Web/API/Body/json
         const saveTripData = await response.json();
         console.log(saveTripData);
         return saveTripData;
@@ -144,21 +133,28 @@ const processTripInfo = async (url, tripData) =>{
     return Promise.resolve();
 }
 
-const displayTripInfo = async (url) => {
+function displayTripInfo(serverData) {
+    console.log(serverData);
+    const data = serverData[serverData.length-1];
+    document.getElementById('lat').innerHTML = '<span>Lat: ' +data.latitude +'</span>';
+    document.getElementById('long').innerHTML = '<span>Lon: ' +data.longitude +'</span>';
+    document.getElementById('country').innerHTML = '<span>Country: ' + data.country+'</span>';
+    const message ='<span>your '+data.tripDuration + ' day trip starts in ' + data.pendingDays +' days</span>';
+    document.getElementById('message').innerHTML = message;
+    document.getElementById('temp').innerHTML = '<span>High is in ' +data.high +'&#8451 and low is in ' +data.low +'&#8451</span>';
+    document.getElementById('city-img').src = data.cityImage;
+}
+
+async function fetchAndDisplayTripInfo(url) {
     const request = await fetch(url);
-    try{
+    try {
         const serverData = await request.json();
         console.log(serverData);
         const data = serverData[serverData.length-1];
-        document.getElementById('lat').innerHTML = '<span>Lat: ' +data.latitude +'</span>';
-        document.getElementById('long').innerHTML = '<span>Lon: ' +data.longitude +'</span>';
-        document.getElementById('country').innerHTML = '<span>Country: ' + data.country+'</span>';
-        const message ='<span>your '+data.tripDuration + ' day trip starts in ' + data.pendingDays +' days</span>';
-        document.getElementById('message').innerHTML = message;      
-        document.getElementById('temp').innerHTML = '<span>High is in ' +data.high +'&#8451 and low is in ' +data.low +'&#8451</span>';
-        document.getElementById('city-img').src = data.cityImage;
+        displayTripInfo(serverData);
     } catch(error) {
         console.log("error", error);
     }
     return Promise.resolve();
 }
+export {generate, getDateDifference, isValidDate, callGeoNamesApiInfo, callWeatherApiInfo, callPixabayApiInfo, processTripInfo, fetchAndDisplayTripInfo, displayTripInfo };
