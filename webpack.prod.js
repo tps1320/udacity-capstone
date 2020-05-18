@@ -23,10 +23,10 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
-            {
-                test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader', 'sass-loader' ]
-            },
+        //    {
+        //        test: /\.scss$/,
+        //        use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+        //    },
             {
                 test: /\.(png|jp(e*)g|svg)$/,  
                 use: [{
@@ -39,7 +39,8 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ],
+                sideEffects: true
             }
         ]
     },
