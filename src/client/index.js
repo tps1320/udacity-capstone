@@ -16,5 +16,10 @@ fbLogo.src = fbImage;
 var twitterLogo = document.getElementById('twitter-logo');
 twitterLogo.src = twitterImage;
 
-
+document.addEventListener('DOMContentLoaded', () => {
+    //event listeners here
+    document.getElementById('generate').addEventListener('click', function(event) {
+        Client.generate(event);
+    });
+});
 export { generate, getDateDifference, isValidDate, callGeoNamesApiInfo, callWeatherApiInfo, callPixabayApiInfo, processTripInfo, displayTripInfo, fetchAndDisplayTripInfo };
