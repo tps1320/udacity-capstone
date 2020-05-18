@@ -1,4 +1,14 @@
-/*  Basic Styling To Override Default For Basic HTML Elements */
+.grid-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 100px 2fr 4fr 80px;
+    grid-template-areas:
+    "header"
+    "info"
+    "main"
+    "footer";
+}
+
 .header {
     grid-area: header;
 }
@@ -15,18 +25,20 @@
     grid-area: footer;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-rows: 100px 2fr 4fr 80px;
-    grid-template-columns: 300px 300px 300px;
-    grid-template-areas:
-        'header header header header header header'
-        'info info info info info info'
-        'main main main main main main'
-        'footer footer footer footer footer footer';
-    grid-gap: 10px;
-    background-color: #29f;
-    padding: 10px;
+@media(min-width:900px) {
+    .grid-container {
+        display: grid;
+        grid-template-rows: 100px 2fr 4fr 80px;
+        grid-template-columns: 300px 300px 300px;
+        grid-template-areas:
+            'header header header header header header'
+            'info info info info info info'
+            'main main main main main main'
+            'footer footer footer footer footer footer';
+        grid-gap: 10px;
+        background-color: #29f;
+        padding: 10px;
+    }
 }
 
 .grid-container > div {
